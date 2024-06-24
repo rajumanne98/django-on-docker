@@ -7,19 +7,24 @@ services:
     volumes:
       - ./app/:/usr/src/app/
     ports:
-      - 8000:8000
+      - "8000:8000"
     env_file:
-      - ./.env.dev
+      - DEBUG: "1"
+      - DB_NAME: myproject
+      - DB_USER: myprojectuser
+      - DB_PASS: myprojectpass
+      - DB_SERVICE: db
+      - DB_PORT: 5432
     depends_on:
       - db
   db:
-    image: postgres:15
+    image: postgres:13
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=hello_django_dev
+      - POSTGRES_USER= myprojectuser
+      - POSTGRES_PASSWORD= myprojectpassword
+      - POSTGRES_DB= myproject
 
 volumes:
   postgres_data:
